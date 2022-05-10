@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GeometryView: View {
     @ObservedObject var viewModel = GeometryViewModel()
+    @ObservedObject var newsLoader = NewsLoader()
     
     var body: some View {
         
@@ -19,16 +20,16 @@ struct GeometryView: View {
                     // スペース
                     Spacer().frame(width: 60)
                     
-                    // IT
+                    // テクノロジー
                     Button(action: {
-                        viewModel.setCategory(no: 0)
+                        newsLoader.setCategory(num: 0)
                         viewModel.setColor(color: .blue)
                         
                     }){
                         RoundedRectangle(cornerRadius: 30)
                             .fill(Color.blue)
                             .overlay(
-                                Text("IT")
+                                Text("テクノロジー")
                                     .foregroundColor(.white)
                                     .fontWeight(.heavy)
                                     .font(.largeTitle)
@@ -36,15 +37,15 @@ struct GeometryView: View {
                             .frame(width: 300, height: 100)
                     }
                     
-                    // お笑い
+                    // エンタメ
                     Button(action: {
-                        viewModel.setCategory(no: 1)
+                        newsLoader.setCategory(num: 1)
                         viewModel.setColor(color: .orange)
                     }){
                         RoundedRectangle(cornerRadius: 30)
                             .fill(Color.orange)
                             .overlay(
-                                Text("お笑い")
+                                Text("エンタメ")
                                     .foregroundColor(.white)
                                     .fontWeight(.heavy)
                                     .font(.largeTitle)
@@ -53,7 +54,7 @@ struct GeometryView: View {
                     
                     // 暮らし
                     Button(action: {
-                        viewModel.setCategory(no: 2)
+                        newsLoader.setCategory(num: 2)
                         viewModel.setColor(color: .green)
                     }){
                         RoundedRectangle(cornerRadius: 30)
@@ -68,15 +69,15 @@ struct GeometryView: View {
                     } //GeometryReader
                     .frame(width: 300)
                     
-                    // その他
+                    // ビジネス
                     Button(action: {
-                        viewModel.setCategory(no: 3)
+                        newsLoader.setCategory(num: 3)
                         viewModel.setColor(color: .gray)
                     }){
                         RoundedRectangle(cornerRadius: 30)
                             .fill(Color.gray)
                             .overlay(
-                                Text("その他")
+                                Text("ビジネス")
                                     .foregroundColor(.white)
                                     .fontWeight(.heavy)
                                     .font(.largeTitle)
@@ -94,7 +95,7 @@ struct GeometryView: View {
                 .frame(height: 10)
             
             // ニュース表示
-            NewsTitleView(viewModel: viewModel)
+            NewsTitleView(viewModel: viewModel, newsLoader: newsLoader )
             
         } // VS
     }

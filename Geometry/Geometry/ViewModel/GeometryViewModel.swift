@@ -15,17 +15,6 @@ class GeometryViewModel: ObservableObject {
     // 記事の色
     @Published var materialColor = Color.blue
     
-    // 記事のカテゴリ
-    @Published var categoryNo = 0
-    
-    func setCategory(no: Int) {
-        self.categoryNo = no
-    }
-    
-    func getCategory() -> Int {
-        return categoryNo
-    }
-    
     func setColor(color: Color){
         self.materialColor = color
     }
@@ -34,20 +23,12 @@ class GeometryViewModel: ObservableObject {
         return materialColor
     }
     
-    func getTitleSize(y: CGFloat) -> CGFloat {
-        if(y <= 250 || y >= 510) {
-            return 250
-        }
-        
-        if(y <= 405) {
-            return y
+    func getColor(y: CGFloat) -> Color {
+        if(y >= 380 && y <= 500) {
+            return .red
         } else {
-            return 780 - y
+            return materialColor
         }
-    }
-    
-    func getNews(categoryNo: Int, number: Int) -> String {
-        return model.news[categoryNo][number]
     }
 }
 

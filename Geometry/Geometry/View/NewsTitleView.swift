@@ -9,55 +9,44 @@ import SwiftUI
 
 struct NewsTitleView: View {
     @ObservedObject var viewModel: GeometryViewModel
+    @ObservedObject var newsLoader: NewsLoader
     
     var body: some View {
         NavigationView {
-            ScrollView {
                 VStack {
-                    // スペース
-                    Spacer().frame(height: 150)
                     
-                    // 9つ作成する
-                    ForEach(0..<9) { num in
+                    // List
+                    List(newsLoader.results, id: \.description) { result in
                         GeometryReader { geometry in
                             HStack {
-                                
-                                // スペース
-                                Spacer()
-                                
-                                // ニュース詳細へ飛ぶ(サンプル)
-                                NavigationLink(destination: NewsView(title: viewModel.getNews(categoryNo: viewModel.getCategory(), number: num))) {
+                                // ニュース詳細へ飛ぶ
+                                NavigationLink(destination: NewsView(result: result)) {
                                     Rectangle()
                                         .stroke(lineWidth: 3)
-                                        .fill(viewModel.getColor())
+                                        .fill(viewModel.getColor(y: geometry.frame(in: .global).origin.y))
                                         .overlay(
                                             HStack {
                                                 // ニュースのタイトル
-                                                Text(viewModel.getNews(categoryNo: viewModel.getCategory(), number: num))
-                                                    .foregroundColor(viewModel.getColor())
+                                                Text(result.title ?? "---")
+                                                    .foregroundColor(viewModel.getColor(y: geometry.frame(in: .global).origin.y))
                                                     .fontWeight(.heavy)
-                                                    .font(.largeTitle)
+                                                    .font(.title2)
                                             }
                                             
                                         )
-                                        // スクロールに合わせてサイズを変更する
-                                        .frame(width:  viewModel.getTitleSize(y: geometry.frame(in: .global).origin.y), height: 100)
-                                        
-                                }
-                                // スペース
-                                Spacer()
-                                
+                                        .frame(height: 100)
+                                } // NaviLink
                             } // HS
                         } //GeometryReader
                         .frame(height: 100)
-                        
-                    } // ForEach
-                    
-                    // スペース
-                    Spacer().frame(height: 350)
-                    
+                    }// List
                 } // VS
-            } // Scroll
         } // Navi
+    }
+}
+
+struct NewsTitleView_Previews: PreviewProvider {
+    static var previews: some View {
+        NewsTitleView(viewModel: GeometryViewModel(), newsLoader: NewsLoader())
     }
 }
